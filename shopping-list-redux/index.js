@@ -31,6 +31,7 @@ function generateItemElement(item, itemIndex) {
 
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
+  shoppingList = shoppingList.filter(item => ~item.name.indexOf(STORE.filterby));
 	
   if (STORE.displayChecked) {
     const items = shoppingList.map((item, index) => generateItemElement(item, index));
@@ -112,10 +113,11 @@ function handleDisplayCheckedItems() {
 }
 
 function handleSearchInput() {
-  let search = '';
+  //let search = '';
   $('.itemSearch').keyup( e	 => {
-    search = $(e.target).val();
-		
+    //search = $(e.target).val();
+    STORE.filterby = $(e.target).val();
+    renderShoppingList();
   });
 }
 
