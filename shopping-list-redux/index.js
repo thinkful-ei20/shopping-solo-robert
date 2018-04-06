@@ -30,7 +30,6 @@ function generateItemElement(item, itemIndex) {
 
 
 function generateShoppingItemsString(shoppingList) {
-  console.log('Generating shopping list element');
   shoppingList = shoppingList.filter(item => ~item.name.indexOf(STORE.filterby));
 	
   if (STORE.displayChecked) {
@@ -46,24 +45,19 @@ function generateShoppingItemsString(shoppingList) {
 
 
 function renderShoppingList() {
-  // render the shopping list in the DOM
-  console.log('`renderShoppingList` ran');
   const shoppingListItemsString = generateShoppingItemsString(STORE.items);
 
-  // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
 
 function addItemToShoppingList(itemName) {
-  console.log(`Adding "${itemName}" to shopping list`);
   STORE.items.push({name: itemName, checked: false});
 }
 
 function handleNewItemSubmit() {
   $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
-    console.log('`handleNewItemSubmit` ran');
     const newItemName = $('.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
     addItemToShoppingList(newItemName);
@@ -72,7 +66,6 @@ function handleNewItemSubmit() {
 }
 
 function toggleCheckedForListItem(itemIndex) {
-  console.log('Toggling checked property for item at index ' + itemIndex);
   STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
 }
 
@@ -85,7 +78,6 @@ function getItemIndexFromElement(item) {
 
 function handleItemCheckClicked() {
   $('.js-shopping-list').on('click', '.js-item-toggle', event => {
-    console.log('`handleItemCheckClicked` ran');
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     toggleCheckedForListItem(itemIndex);
     renderShoppingList();
@@ -93,7 +85,6 @@ function handleItemCheckClicked() {
 }
 
 function deleteListItem(itemIndex) {
-  console.log('deleting item at index ' + itemIndex);
   STORE.items.splice(itemIndex,1);
 }
 
