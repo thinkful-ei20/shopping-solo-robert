@@ -9,6 +9,7 @@ const STORE = {
     {name: 'bread', checked: false}
   ],
   displayChecked: true,
+  filterby: '',
 
 };
 
@@ -110,12 +111,21 @@ function handleDisplayCheckedItems() {
   });
 }
 
+function handleSearchInput() {
+  let search = '';
+  $('.itemSearch').keyup( e	 => {
+    search = $(e.target).val();
+		
+  });
+}
+
 function handleShoppingList() {
   renderShoppingList();
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleDisplayCheckedItems();
+  handleSearchInput();
 }
 
 $(handleShoppingList);
