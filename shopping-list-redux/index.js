@@ -8,7 +8,8 @@ const STORE = {
     {name: 'milk', checked: true},
     {name: 'bread', checked: false}
   ],
-	
+  displayChecked: true,
+
 };
 
 function generateItemElement(item, itemIndex) {
@@ -29,17 +30,23 @@ function generateItemElement(item, itemIndex) {
 
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
+	
+  if (STORE.displayChecked) {
+    const items = shoppingList.map((item, index) => generateItemElement(item, index));
 
-  const items = shoppingList.map((item, index) => generateItemElement(item, index));
-
-  return items.join('');
+    return items.join('');
+  } else {
+    const items = shoppingList.filter(unchecked => unchecked.checked === false)
+      .map((item, index) => generateItemElement(item, index));
+    return items.join('');
+  }
 }
 
 
 function renderShoppingList() {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
-  const shoppingListItemsString = generateShoppingItemsString(STORE);
+  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
 
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
@@ -48,7 +55,7 @@ function renderShoppingList() {
 
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
-  STORE.push({name: itemName, checked: false});
+  STORE.items.push({name: itemName, checked: false});
 }
 
 function handleNewItemSubmit() {
@@ -64,7 +71,7 @@ function handleNewItemSubmit() {
 
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
-  STORE[itemIndex].checked = !STORE[itemIndex].checked;
+  STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
 }
 
 function getItemIndexFromElement(item) {
@@ -85,7 +92,7 @@ function handleItemCheckClicked() {
 
 function deleteListItem(itemIndex) {
   console.log('deleting item at index ' + itemIndex);
-  STORE.splice(itemIndex,1);
+  STORE.items.splice(itemIndex,1);
 }
 
 function handleDeleteItemClicked() {
@@ -97,8 +104,9 @@ function handleDeleteItemClicked() {
 }
 
 function handleDisplayCheckedItems() {
-  $('.displayChecked').change((event) =>{
-    
+  $('.displayChecked').change(() =>{
+    STORE.displayChecked = !STORE.displayChecked;
+    renderShoppingList();
   });
 }
 
