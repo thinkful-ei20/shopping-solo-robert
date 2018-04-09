@@ -38,6 +38,15 @@ button:hover {
   padding: 20px;
 }
 
+a.editButton {
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+span.shopping-item.js-shopping-item {
+  display: inline-block;
+}
+
 .shopping-item {
   display: block;
   color: grey;
